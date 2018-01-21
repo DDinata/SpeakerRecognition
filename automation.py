@@ -74,6 +74,8 @@ def ideas(inputString):
 	# response
 	responseList = re.findall(r'I have an idea [\w+\s]+\n (I.+)', inputString)
 
+	print(ideaList)
+
 	for x,y in zip(ideaList,responseList):
 		# analyze y
 		service_request = service.documents().analyzeSentiment(
@@ -105,9 +107,9 @@ def sendMemo(inputString):
 
 
 def uberSearch(inputString):
-	uberPattern = 'Lets roll out to'
+	uberPattern = 'Let us roll out to'
 
-	uberDestination = re.findall(r'Lets roll out to [\w\s+]',inputString)
+	uberDestination = re.findall(r'Let us roll out to [\w\s+]',inputString)
 
 	headers = {
 	    'Accept': 'application/json',

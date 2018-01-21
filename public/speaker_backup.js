@@ -14,14 +14,14 @@ var $microphone = $('#microphone'),
     $microphoneLevel = $('#microphone-level'),
     $recording = $('#recording'),
     $timeDisplay = $('#time-display'),
-    $record = $('#btnRecord'),
+    $record = $('#record'),
     $cancel = $('#cancel')
 
 // initialize input element states (required for reloading page on Firefox)
 $microphone.attr('disabled', false);
 $microphone[0].checked = true;
 $microphoneLevel.attr('disabled', false);
-$microphoneLevel[0].valueAsNumber = 0.3;
+$microphoneLevel[0].valueAsNumber = 0;
 
 
 var microphone = undefined,     // obtained by user click
@@ -29,7 +29,7 @@ var microphone = undefined,     // obtained by user click
     mixer = audioContext.createGain(),
     input = audioContext.createGain(),
     processor = undefined;      // created on recording
-microphoneLevel.gain.value = 0.3;
+microphoneLevel.gain.value = 0;
 microphoneLevel.connect(mixer);
 mixer.connect(input);
 mixer.connect(audioContext.destination);
@@ -47,7 +47,7 @@ if (microphone == null)
       microphone = audioContext.createMediaStreamSource(stream);
       microphone.connect(microphoneLevel);
       $microphone.attr('disabled', true);
-      //$microphoneLevel.removeClass('hidden');
+      $microphoneLevel.removeClass('hidden');
     },
     function(error) {
       $microphone[0].checked = false;
