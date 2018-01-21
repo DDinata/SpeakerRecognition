@@ -21,6 +21,16 @@ from uber_rides.client import UberRidesClient
 
 inputString = '\nI have an idea lets eat bbq\n I think thats alright\n Let us send out a memo saying that I hate Django Web Framework\n David you will be assigned the task of typing'
 
+
+def task(inputString):
+	taskPattern = 'you will be assigned the task of'
+	taskList = re.findall(r'[A-Z][a-z]+ you will be assigned the task of (.+)',inputString)
+	nameTask = re.findall(r'([A-Z][a-z]+) you will be assigned the task of .+',inputString)
+	tasks = defaultdict()
+	for x,y in zip(nameTask, taskList):
+		tasks[x] = y
+	return tasks
+
 def send_email(to, subject, msg):
     try:
         server = smtplib.SMTP('smtp.gmail.com:587')
@@ -86,8 +96,9 @@ def sendMemo(inputString):
 	msg = 'Memos: \n' 
 	for i in memoList:
 	    msg += '- ' + i + '\n' 
-	print(msg)
 	send_email("sbhackstest123@gmail.com" ,subject, msg)
+	return memoList
+
 
 
 def uberSearch(inputString):
@@ -138,3 +149,4 @@ def uberSearch(inputString):
 	return estimate
 
 
+print(uberSearch(inputString))
