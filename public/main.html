@@ -1,0 +1,298 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    </head>
+    <style type="text/css">
+
+
+    .jumbotron{
+        margin-top: 30px;
+        height: 90%;
+        padding-top: 20px;
+    }
+    .heading{
+        font-family: 'Roboto', sans-serif;
+        margin-bottom: 20px;
+    }
+    .card{
+        margin-top: 20px;
+    }
+
+    .card-block{
+        padding-top: 5px;
+        padding-bottom: 0px;
+        text-align: center;
+    }
+
+    .sidebar {
+        flex-direction: column;
+    }
+
+    .scrollbar {
+        height: 100%;
+        overflow-y: scroll;
+        margin-bottom: 25px;
+    }
+
+    .menu-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .sidenav {
+        height: 100%; /* 100% Full-height */
+        width: 0; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Stay on top */
+        top: 0; /* Stay at the top */
+        left: 0;
+        background-color: #111; /* Black*/
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 60px; /* Place content 60px from the top */
+        transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+    .lead {
+        display:inline;
+    }
+
+    .results-cards {
+        width: 300px;
+    }
+
+    #btnRecord {
+        margin-top: 30px;
+        padding: 10px;
+        width: 100%;
+    }
+
+    #time {
+        float: right;
+    }
+
+    #emailCard {
+        width: 400px;
+    }
+
+    #graphCard {
+        width: 455px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 12px;
+      background-color: #F5F5F5; }
+
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      background-color: #F5F5F5;
+      border-radius: 10px; }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      background-color: #0080FF; }
+    </style>
+
+    <body>
+        <script>
+            /* Set the width of the side navigation to 250px */
+            function openNav() {
+                document.getElementById("results").style.width = "100%";
+                console.log("opening nav")
+            }
+
+            /* Set the width of the side navigation to 0 */
+            function closeNav() {
+                document.getElementById("results").style.width = "0";
+                console.log("closing nav")
+            }
+
+            function startRecording() {
+                console.log("recording started");
+                document.getElementById("btnRecord").innerText = "Stop Recording";
+                document.getElementById("btnRecord").className = "btn btn-danger";
+                document.getElementById("btnRecord").onclick = function(){stopRecording()};
+                // document.getElementById("btnRecord").setAttribute('onclick', stopRecording());
+                return false;
+            }
+
+            function stopRecording() {
+                console.log("recording ended");
+                document.getElementById("btnRecord").innerText = "Show Results";
+                document.getElementById("btnRecord").className = "btn btn-secondary";
+                document.getElementById("btnRecord").onclick = function(){openNav()};
+                createResults();
+                return false;
+            }
+
+            function createChart() {
+                var chart = new CanvasJS.Chart("chartContainer", {
+            	animationEnabled: true,
+            	title:{
+            		horizontalAlign: "left"
+            	},
+            	data: [{
+            		type: "doughnut",
+            		startAngle: 60,
+            		//innerRadius: 60,
+            		indexLabelFontSize: 17,
+            		indexLabel: "{label} - #percent%",
+            		toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+            		dataPoints: [
+            			{ y: 30, label: "Neil" },
+            			{ y: 28, label: "Gates" },
+            			{ y: 20, label: "David" },
+            			{ y: 27, label: "Eric"},
+            			{ y: 15, label: "Misc"},
+                		]
+                	}]
+                });
+                chart.render();
+            }
+
+            function createResults() {
+                // create donut chart
+                createChart();
+            }
+        </script>
+
+
+        <div id="results" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <div class="menu-container" id="sidebarMain">
+
+                <div class="card results-cards" id="graphCard">
+                    <!-- <img class="card-img-top" src="" alt="Speaker Graph"> -->
+                    <!-- <canvas id="chartContainer" width="300"; height="300"></canvas> -->
+                    <div id="chartContainer" style="height: 300px; width: 450px; margin: 0px auto;"></div>
+                    <div class="card-block">
+                        <h4>Speaker Graph</h4>
+                    </div>
+                </div>
+
+                <div class="card results-cards" id="emailCard">
+                    <div class="card-block">
+                        <h4 class="card-title">Email Memo</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card results-cards" id="uberCard">
+                    <div class="card-block">
+                        <h4 class="card-title">Ridesharing</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="container" id="main">
+            <div class="row">
+                <div class="col-8">
+
+                    <div class="jumbotron">
+                        <p class="lead">Meeting Minutes</p>
+                        <p class="lead" id="time">0:00</p>
+                        <hr class="my-3">
+                        <div class="scrollbar scrollbar-primary">
+                            <div class="force-overflow">
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4" style="float:right" id="sidebar">
+                    <button type="button" class="btn btn-primary" id="btnRecord" onclick="startRecording()">Start Recording</button>
+                    <div class="card">
+                      <div class="card-block">
+                        <h4 class="card-title">Ideas</h4>
+                      </div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                      </ul>
+                    </div>
+                    <div class="card">
+                      <div class="card-block">
+                        <h4 class="card-title">To Do</h4>
+                      </div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="../canvasjs.min.js"></script>
+    </body>
+</html>
