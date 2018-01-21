@@ -120,6 +120,7 @@
         <script>
             /* Set the width of the side navigation to 250px */
             function openNav() {
+                createResults();
                 document.getElementById("results").style.width = "100%";
                 console.log("opening nav")
             }
@@ -144,7 +145,6 @@
                 document.getElementById("btnRecord").innerText = "Show Results";
                 document.getElementById("btnRecord").className = "btn btn-secondary";
                 document.getElementById("btnRecord").onclick = function(){openNav()};
-                createResults();
                 return false;
             }
 
