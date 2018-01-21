@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>SpeakerClient</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" src="SpeakerIdClient.js"></script>
+</head>
+<body>
+    <button type="button" onclick="createProfile()">Create New Profile</button><br />
+
+    <input type="file" id="enrollFile" />
+    <input type="text" id="profileId7" placeholder="profile id" />
+    <button type="button" onclick="enrollProfile('profileId7', 'enrollFile')">Enroll</button><br />
+
+    <input type="file" id="identifyFile" />
+    <input type="text" id="profileId6" placeholder="profile id" />
+    <button type="button" onclick="identify('profileId6', 'identifyFile')">Identify</button><br />
+
+    <input type="text" id="opId" placeholder="operation Id" />
+    <button type="button" onclick="getStatus('opId')">Get Identification Status</button><br />
+
+    <input type="text" id="profileId8" placeholder="profile id" />
+    <button type="button" onclick="getProfile('profileId8')">Get Profile</button><br />
+
+    <button type="button" onclick="getAllProfiles()">Console Log Profiles</button><br />
+    <br />
+    <input type="text" id="profileId9" placeholder="profile id" />
+    <button type="button" onclick="deleteProfile('profileId9')">Delete Profile</button>
+</body>
+</html>
