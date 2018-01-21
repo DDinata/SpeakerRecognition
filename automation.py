@@ -19,7 +19,10 @@ import urllib
 from uber_rides.session import Session
 from uber_rides.client import UberRidesClient
 
-inputString = '\nI have an idea lets eat bbq\n I think thats alright\n Let us send out a memo saying that I hate Django Web Framework\n David you will be assigned the task of typing'
+#inputString = '\nI have an idea lets eat bbq\n I think thats alright\n Let us send out a memo saying that I hate Django Web Framework\n David you will be assigned the task of typing'
+
+import sys
+inputString = sys.argv[1];
 
 
 def task(inputString):
@@ -134,9 +137,9 @@ def uberSearch(inputString):
 
 
 	response = client.get_price_estimates(
-	start_latitude=37.770,
+	start_latitude=36.750,
 	start_longitude=-122.411,
-	end_latitude=37.791,
+	end_latitude=37.781,
 	end_longitude=-122.405,
 	seat_count=2
 	)
@@ -149,4 +152,10 @@ def uberSearch(inputString):
 	return estimate
 
 
+
+
+
+print(task(inputString))
+print(ideas(inputString))
+print(sendMemo(inputString))
 print(uberSearch(inputString))

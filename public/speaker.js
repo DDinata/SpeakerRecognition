@@ -220,6 +220,31 @@ function stopRecordingProcess(finish) {
   }
   else
     encoder.cancel();
+
+
+  console.log("recording finished");
+  sendFinalText();
+
+}
+
+function sendFinalText() {
+  console.log("sending final text");
+  var final_text = "";
+  for (var i = 0; i < text.length; i++) {
+    final_text = final_text + text[i] + " ";
+  }
+  console.log(final_text);
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "/python_stuff", true);
+  xhr.onreadystatechange = function(e) {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      const response = JSON.parse(xhr.responseText);
+      console.log(response.output);
+    }   
+  };  
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify({inputString: final_text}));
 }
 
 // recording buttons interface

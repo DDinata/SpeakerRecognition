@@ -86,6 +86,24 @@ app.post("/resample", function(req, res) {
 });
 
 
+app.post("/python_stuff", function(req, res) {
+  console.log("PYTHON STUFF");
+  inputString = req.body.inputString;
+  console.log(inputString);
+  cmd = "python3 automation.py '" + inputString + "'";
+  const exec = require('child_process').exec;
+  const child = exec(cmd,
+      (error, stdout, stderr) => {
+          //console.log(`stdout: ${stdout}`);
+          //console.log(`stderr: ${stderr}`);
+          
+          console.log("STDOUT: " + stdout);
+          res.send({output: stdout});
+  }); 
+
+});
+
+
 server.listen(process.env.PORT || 3000, function() {
     console.log("server up boi");
 });
