@@ -136,7 +136,7 @@
                 document.getElementById("btnRecord").innerText = "Stop Recording";
                 document.getElementById("btnRecord").className = "btn btn-danger";
                 document.getElementById("btnRecord").onclick = function(){stopRecording()};
-                // document.getElementById("btnRecord").setAttribute('onclick', stopRecording());
+                setInterval(setTime, 1000);
                 return false;
             }
 
@@ -219,6 +219,19 @@
                     </div>
                 </div>
 
+                <div class="card results-cards">
+                    <div class="card-block">
+                        <h4 class="card-title">To Do</h4>
+                    </div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                      </ul>
+                </div>
+
             </div>
 
         </div>
@@ -228,33 +241,11 @@
 
                     <div class="jumbotron">
                         <p class="lead">Meeting Minutes</p>
-                        <p class="lead" id="time">0:00</p>
+                        <p class="lead" id="time"><label id="mins">0</label>:<label id="secs">00</label></p>
                         <hr class="my-3">
                         <div class="scrollbar scrollbar-primary">
                             <div class="force-overflow">
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                                <p id="mainText">IIt uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.It uses utility classes for typography and spacing to space content out within the larger container.t uses utility classes for typography and spacing to space content out within the larger container.</p>
                             </div>
                         </div>
                     </div>
@@ -264,19 +255,19 @@
                     <button type="button" class="btn btn-primary" id="btnRecord" onclick="startRecording()">Start Recording</button>
                     <div class="card">
                       <div class="card-block">
-                        <h4 class="card-title">Ideas</h4>
+                        <h4 class="card-title">Attendees</h4>
                       </div>
                       <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
+                        <li class="list-group-item">Gates Zeng</li>
+                        <li class="list-group-item">Neil Natarajan</li>
+                        <li class="list-group-item">Eric Zhang</li>
+                        <li class="list-group-item">David Dinata</li>
                       </ul>
                     </div>
+
                     <div class="card">
                       <div class="card-block">
-                        <h4 class="card-title">To Do</h4>
+                        <h4 class="card-title">Ideas</h4>
                       </div>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">Cras justo odio</li>
