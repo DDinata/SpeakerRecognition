@@ -67,14 +67,16 @@ function getBuffers(event) {
     buffers[ch] = event.inputBuffer.getChannelData(ch);
   return buffers;
 }
+const bufSz = 1024;
 
 var text = [];
 var chunk_num = 0;
-var start_time = Date.now()
+var start_time = Date.now();
 
-function startRecordingProcess() {
+var profiles = {}
+
+function startRegularRecording() {
   console.log("STARTING TO RECORD");
-  var bufSz = 1024;
   processor = audioContext.createScriptProcessor(bufSz, 2, 2);
   input.connect(processor);
   processor.connect(audioContext.destination);
@@ -82,7 +84,6 @@ function startRecordingProcess() {
   start_time = Date.now();
   start_time_chunk = Date.now();
   processor.onaudioprocess = function(event) {
-    console.log("HELLO");
     encoder.encode(getBuffers(event));
     if (Date.now() - start_time_chunk > 10000) {
       console.log("RESETTING CHUNK");
@@ -91,6 +92,44 @@ function startRecordingProcess() {
       start_time_chunk = Date.now();
       text.push("");
       send_encoded_audio(encoded_audio, chunk_num);
+      chunk_num = chunk_num +  1;
+    }
+  };
+}
+
+function stopRegularRecording() {
+  input.disconnect();
+  processor.disconnect();
+  if (finish) {
+    encoded_audio = encoder.finish();
+    console.log(encoded_audio);
+  }
+  else
+    encoder.cancel();
+
+}
+  
+
+function startRecordingProcess() {
+  console.log("STARTING TO RECORD");
+  processor = audioContext.createScriptProcessor(bufSz, 2, 2);
+  input.connect(processor);
+  processor.connect(audioContext.destination);
+  encoder = new WavAudioEncoder(audioContext.sampleRate, 1);
+  start_time = Date.now();
+  start_time_chunk = Date.now();
+  processor.onaudioprocess = function(event) {
+    encoder.encode(getBuffers(event));
+    if (Date.now() - start_time_chunk > 10000) {
+      console.log("RESETTING CHUNK");
+      encoded_audio = encoder.finish();
+      encoder = new WavAudioEncoder(audioContext.sampleRate, 1);
+      start_time_chunk = Date.now();
+      text.push("");
+      send_encoded_audio(encoded_audio, chunk_num);
+      resample_encoded_audio(encoded_audio, chunk_num, function(resampled_audio) {
+        console.log(resampled_audio);
+      });
       chunk_num = chunk_num +  1;
     }
     else if (Date.now() - start_time > 1000) {
@@ -136,6 +175,30 @@ function send_encoded_audio(encoded_audio, cn, cb) {
   reader.readAsDataURL(encoded_audio); 
 }
 
+function resample_encoded_audio(encoded_audio, cn, cb) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "/resample", true);
+  xhr.onreadystatechange = function(e) {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      const response = JSON.parse(xhr.responseText);
+      console.log(response);
+      if (cb) {
+        cb(response.resampled_audio);
+      }
+    }   
+  };  
+  xhr.setRequestHeader("Content-Type", "application/json");
+
+  var reader = new FileReader();
+  reader.onloadend = function() {
+    base64Data = reader.result;                
+    base64Data = base64Data.replace("data:audio/wav;base64,", "");
+    //console.log(base64Data);
+    xhr.send(JSON.stringify({audio: base64Data}));
+  };
+  reader.readAsDataURL(encoded_audio); 
+}
+
 
 function stopRecordingProcess(finish) {
   input.disconnect();
@@ -143,9 +206,7 @@ function stopRecordingProcess(finish) {
   if (finish) {
     encoded_audio = encoder.finish();
     console.log(encoded_audio);
-
-    send_encoded_audio(encoded_audio);
-
+    send_encoded_audio(encoded_audio, chunk_num);
   }
   else
     encoder.cancel();

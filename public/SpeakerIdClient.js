@@ -161,3 +161,29 @@ function getAllProfiles() {
         console.log("error");
     });
 };
+
+function identifyAudio(audioData) {
+    var params = {
+        "shortAudio": "true",
+    };
+
+    $.ajax({
+        url: "https://westus.api.cognitive.microsoft.com/spid/v1.0/identify?identificationProfileIds=" + profId + "&" + $.param(params),
+        beforeSend: function(xhrObj){
+            // Request headers
+            xhrObj.setRequestHeader("Content-Type","application/octet-stream");
+            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscription_key);
+        },
+        type: "POST",
+        // Request body
+        data: audio,
+        processData: false
+    })
+    .done(function(data,status,xhr) {
+        console.log("success");
+        console.log(xhr.getAllResponseHeaders());
+    })
+    .fail(function() {
+        console.log("error");
+    });
+};
