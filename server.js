@@ -65,6 +65,27 @@ app.post("/stream_audio", function(req, res) {
 
 });
 
+app.post("/resample", function(req, res) {
+  console.log("RESAMPLING");
+  audio = req.body.audio;
+  fs.writeFile("resample_this_shit.wav", audio, 'base64', function(err){});
+  cmd = "sox resample_this_shit.wav -r 16000 resampled.wav";
+  const exec = require('child_process').exec;
+  const child = exec(cmd,
+      (error, stdout, stderr) => {
+          console.log(`stdout: ${stdout}`);
+          console.log(`stderr: ${stderr}`);
+          console.log("READING FILE");
+          fs.readFile('resampled.wav', function (err, data) {
+              if (err) throw err;
+                console.log("FUCKING RESAMPLED DATA.. SENDING BACK");
+                resampled_audio = data.toString("base64");
+                res.send({resampled_audio: resampled_audio});
+          }); 
+  }); 
+});
+
+
 server.listen(process.env.PORT || 3000, function() {
     console.log("server up boi");
 });
