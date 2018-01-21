@@ -110,6 +110,8 @@ function stopRegularRecording() {
 }
   
 
+speaker_chunks = [];
+
 function startRecordingProcess() {
   console.log("STARTING TO RECORD");
   processor = audioContext.createScriptProcessor(bufSz, 2, 2);
@@ -128,7 +130,11 @@ function startRecordingProcess() {
       text.push("");
       send_encoded_audio(encoded_audio, chunk_num);
       resample_encoded_audio(encoded_audio, chunk_num, function(resampled_audio) {
-        console.log(resampled_audio);
+        //console.log(resampled_audio);
+        identifyAudio(resampled_audio, function(name) {
+          speaker_chunks.push(name);
+          console.log(speaker_chunks);
+        });
       });
       chunk_num = chunk_num +  1;
     }
@@ -149,15 +155,19 @@ function send_encoded_audio(encoded_audio, cn, cb) {
       const response = JSON.parse(xhr.responseText);
       console.log(response);
       text[cn] = response.transcription;
-      big_text = "";
       console.log(cn);
       console.log("TEXT:");
+      $("#response-text").html("");
       for (var i = 0; i <= cn; i++) {
-        big_text = big_text + text[i] + " ";
+        speaker = "";
+        if (i < speaker_chunks.length) {
+          speaker = speaker_chunks[i] + ": ";
+        }
+        p_text = speaker + text[i];
+        p_content = "<p>" + p_text + "</p>";
+        $("#response-text").append(p_content);
       }
-
-      console.log(big_text);
-      $("#response-text").text(big_text);
+      console.log(p_text);
       if (cb) {
         cb();
       }
