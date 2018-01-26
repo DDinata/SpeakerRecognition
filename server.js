@@ -30,8 +30,8 @@ app.get("/", function(req, res) {
   res.sendFile(PUBLIC_DIR + "index.html");
 });
 
-app.get("/test", function(req, res) {
-  res.sendFile(PUBLIC_DIR + "index.html");
+app.get("/temp", function(req, res) {
+  res.sendFile(PUBLIC_DIR + "temp.html");
 });
 
 app.post("/stream_audio", function(req, res) {
@@ -78,7 +78,7 @@ app.post("/resample", function(req, res) {
           console.log("READING FILE");
           fs.readFile('resampled.wav', function (err, data) {
               if (err) throw err;
-                console.log("FUCKING RESAMPLED DATA.. SENDING BACK");
+                console.log("RESAMPLED DATA.. SENDING BACK");
                 resampled_audio = data.toString("base64");
                 res.send({resampled_audio: resampled_audio});
           }); 
@@ -89,7 +89,45 @@ app.post("/resample", function(req, res) {
 app.post("/python_stuff", function(req, res) {
   console.log("PYTHON STUFF");
   inputString = req.body.inputString;
-  console.log(inputString);
+
+  fs.writeFile("pystuff", inputString, function(err){
+    cmd = "python3 automation2.py pystuff";
+      const exec = require('child_process').exec;
+      const child = exec(cmd,
+          (error, stdout, stderr) => {
+            console.log("PYTHON STDOUT: " + stdout);
+
+            /*
+						fs.readFile("task", function(err, task_data) {
+              console.log("TASK:");
+              task_data = JSON.parse(task_data);
+              console.log(task_data.toString());
+              fs.readFile("idea", function(err, idea_data) {
+                console.log("IDEA:");
+                idea_data = JSON.parse(idea_data);
+                console.log(idea_data.toString());
+                fs.readFile("memo", function(err, memo_data) {
+                  console.log("MEMO:");
+                  console.log(memo_data.toString());
+                  memo_data = JSON.parse(memo_data);
+                  fs.readFile("uber", function(err, uber_data) {
+                    console.log("UBER:");
+                    uber_data = JSON.parse(uber_data);
+                    console.log(uber_data.toString());
+                    res.send({task_data, idea_data, memo_data, uber_data});
+                  });
+                });
+              });
+            });
+            */
+
+
+      }); 
+
+  });
+
+
+  /*
   cmd = "python3 automation.py '" + inputString + "'";
   const exec = require('child_process').exec;
   const child = exec(cmd,
@@ -100,6 +138,7 @@ app.post("/python_stuff", function(req, res) {
           console.log("STDOUT: " + stdout);
           res.send({output: stdout});
   }); 
+  */
 
 });
 

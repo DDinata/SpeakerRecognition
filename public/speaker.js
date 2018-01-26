@@ -112,7 +112,14 @@ function stopRegularRecording() {
 
 speaker_chunks = [];
 
+var has_fucking_recorded = false
 function startRecordingProcess() {
+  if (has_fucking_recorded) {
+    return;
+  }
+  else {
+    has_fucking_recorded = true;
+  }
   console.log("STARTING TO RECORD");
   processor = audioContext.createScriptProcessor(bufSz, 2, 2);
   input.connect(processor);
@@ -269,7 +276,7 @@ function disableControlsOnRecord(disabled) {
 function startRecording() {
   startTime = Date.now();
   $recording.removeClass('hidden');
-  $record.html('STOP');
+  //$record.html('STOP');
   $cancel.removeClass('hidden');
   disableControlsOnRecord(true);
   startRecordingProcess();
@@ -279,7 +286,7 @@ function stopRecording(finish) {
   startTime = null;
   $timeDisplay.html('00:00');
   $recording.addClass('hidden');
-  $record.html('RECORD');
+  //$record.html('RECORD');
   $cancel.addClass('hidden');
   disableControlsOnRecord(false);
   stopRecordingProcess(finish);

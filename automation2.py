@@ -19,10 +19,16 @@ import urllib
 from uber_rides.session import Session
 from uber_rides.client import UberRidesClient
 
-#inputString = '\nI have an idea lets eat bbq\n I think thats alright\n Let us send out a memo saying that I hate Django Web Framework\n David you will be assigned the task of typing'
-
+import json
 import sys
-inputString = sys.argv[1];
+
+#inputFile = sys.argv[1]
+f = open("pystuff", "r")
+inputString = f.read()
+
+
+print("RUNNING PYTHON SCRIPT ASDF")
+print(inputString)
 
 
 def task(inputString):
@@ -69,13 +75,10 @@ def ideas(inputString):
 	ideasDict = defaultdict(float)
 
 	# idea
-	ideaList = re.findall(r'I have an idea ([\w+\s]+)\n I', inputString)
+	ideaList = re.findall(r'I have an idea ([\w+\s]+)actually', inputString)
 
 	# response
-	responseList = re.findall(r'I have an idea [\w+\s]+\n (I.+)', inputString)
-
-	print(ideaList)
-
+	responseList = re.findall(r'I have an idea [\w+\s]+ actually (.*) idea', inputString)
 	for x,y in zip(ideaList,responseList):
 		# analyze y
 		service_request = service.documents().analyzeSentiment(
@@ -94,22 +97,20 @@ def ideas(inputString):
 
 
 def sendMemo(inputString):
-	memoPattern = 'Let us send out a memo saying'
-	memoList = re.findall(r'Let us send out a memo saying that ([\w+\s]+)\n', inputString) 
+	memoList = re.findall(r'send out a memo saying that ([\w+\s]+)\ (alright|all right)', inputString) 
 
 	subject = "Test subject"
 	msg = 'Memos: \n' 
 	for i in memoList:
-	    msg += '- ' + i + '\n' 
+	    msg += '- ' + i[0] + '\n' 
+	print("MSG: ", msg)
 	send_email("sbhackstest123@gmail.com" ,subject, msg)
 	return memoList
 
 
 
 def uberSearch(inputString):
-	uberPattern = 'Let us roll out to'
-
-	uberDestination = re.findall(r'Let us roll out to [\w\s+]',inputString)
+	uberDestination = re.findall(r'let us roll out to [\w\s+]',inputString)
 
 	headers = {
 	    'Accept': 'application/json',
@@ -139,9 +140,9 @@ def uberSearch(inputString):
 
 
 	response = client.get_price_estimates(
-	start_latitude=36.750,
+	start_latitude=37.770,
 	start_longitude=-122.411,
-	end_latitude=37.781,
+	end_latitude=37.791,
 	end_longitude=-122.405,
 	seat_count=2
 	)
@@ -154,10 +155,34 @@ def uberSearch(inputString):
 	return estimate
 
 
+print("Hello")
+task_output = task(inputString)
+idea_output = ideas(inputString)
+memo_output = sendMemo(inputString)
+uber_output = uberSearch(inputString)
+
+print(task_output)
+g = open('task', 'w')
+g.write(json.dumps(task_output))
+g.close()
 
 
+print(idea_output)
+h = open('idea', 'w')
+h.write(json.dumps(idea_output))
+h.close()
 
-print(task(inputString))
-print(ideas(inputString))
-print(sendMemo(inputString))
-print(uberSearch(inputString))
+
+print(memo_output)
+i = open('memo', 'w')
+i.write(json.dumps(memo_output))
+i.close()
+
+
+print(uber_output)
+j = open('uber', 'w')
+j.write(json.dumps(uber_output))
+j.close()
+
+
+print ("DONE")

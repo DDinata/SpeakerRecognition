@@ -174,15 +174,18 @@ function getAllProfiles() {
 
 
 function set_name(id) {
-  name = "godamnit";
-  if (id == "4d2cccc4-d61c-48f4-b0a2-d2c871394f85") {
+  name = "Other";
+  if (id == "c6a07b7f-4762-48d4-ba0a-9c083cbb2950") {
     name = "Eric";
   }
-  else if (id == "2db575fa-98c9-4a8f-9d3e-027b9190e274") {
+  else if (id == "14e36716-0221-460f-9d6a-1de207d335f0") {
     name = "Gates";
   }
-  else if (id == "fc0c40f9-2b61-461f-9df4-79e58e1c61f2") {
+  else if (id == "09f0ee67-1af8-4abf-aa8a-f436bed7d2a5") {
     name = "Neil";
+  }
+  else if (id == "44ef3b01-4279-4e37-b3bc-3af154dd2ad2") {
+    name = "David";
   }
   return name;
 }
@@ -192,7 +195,7 @@ function set_name(id) {
 
 function identifyAudio(audio, cb) {
 
-  const profId = "fc0c40f9-2b61-461f-9df4-79e58e1c61f2, 2db575fa-98c9-4a8f-9d3e-027b9190e274, 4d2cccc4-d61c-48f4-b0a2-d2c871394f85";
+  const profId = "44ef3b01-4279-4e37-b3bc-3af154dd2ad2,c6a07b7f-4762-48d4-ba0a-9c083cbb2950,14e36716-0221-460f-9d6a-1de207d335f0,09f0ee67-1af8-4abf-aa8a-f436bed7d2a5";
 
   const audioBlob = base64ToBlob("data:audio/wav;base64,".concat(audio));
 
